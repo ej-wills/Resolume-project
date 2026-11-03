@@ -1,5 +1,6 @@
 using UnityEngine;
-using Unity.InferenceEngine; 
+using Unity.InferenceEngine;
+using System;
 
 public class HandLiveTest : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class HandLiveTest : MonoBehaviour
     public float pinkyThreshold = 1.1f;
     public float pinchThreshold = 0.25f;
 
+    Tensor<float> input;
+
+    public string realGesture { get; private set; } = "-";
+    public event Action<string> GestureChanged;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,6 +39,8 @@ public class HandLiveTest : MonoBehaviour
 
         model = ModelLoader.Load(landmarkModel);
         worker = new Worker(model, BackendType.GPUCompute);
+
+        input = new Tensor<float>(new TensorShape(1, 3, 256, 256));
     }
 
     // Update is called once per frame
@@ -52,8 +60,9 @@ public class HandLiveTest : MonoBehaviour
 
         Graphics.Blit(cam, crop, scale, offset);
 
-        using var input = TextureConverter.ToTensor(crop, 256, 256, 3);
+        TextureConverter.ToTensor(crop, input, new TextureTransform());
         worker.Schedule(input);
+
 
         bool gotLandmarks = false;
         threshold = 0;
@@ -88,6 +97,12 @@ public class HandLiveTest : MonoBehaviour
 
         haveHand = gotLandmarks && threshold > detectionThreshold;
         gesture = haveHand ? HandGestures.Classify(lm) : "-";
+
+        if(gesture != realGesture)
+        {
+            realGesture = gesture;
+            GestureChanged?.Invoke(realGesture);
+        }
     }
 
     void OnGUI()
@@ -123,6 +138,9 @@ public class HandLiveTest : MonoBehaviour
         if (cam != null) cam.Stop();
     }
 
+
+
+ 
 
 
 
