@@ -7,6 +7,14 @@ public class HandLiveTest : MonoBehaviour
     public ModelAsset landmarkModel;
     public float detectionThreshold = 1f;
 
+    public int framesNeeded = 5;
+    public int lostFramesAllowed = 10;
+    public float smoothing = 0.5f;
+
+    string candidate = "-";
+    int candidateFrames = 0;
+    int lostFrames = 0;
+
     WebCamTexture cam;
     RenderTexture crop;
     Model model;
@@ -88,7 +96,9 @@ public class HandLiveTest : MonoBehaviour
             {
                 for(int j = 0; j < 21; j++)
                 {
-                    lm[j] = new Vector3(a[j*3], a[j*3+1], a[j*3+2]);
+                    Vector3 p = new Vector3(a[j*3], a[j*3+1], a[j*3+2]);
+                    lm[j] =haveHand ? Vector3.Lerp(lm[j], p, smoothing) : p;
+                   // lm[j] = new Vector3(a[j*3], a[j*3+1], a[j*3+2]);
                 }
                 gotLandmarks = true;
             }
@@ -96,13 +106,40 @@ public class HandLiveTest : MonoBehaviour
         loggedShapes = true;
 
         haveHand = gotLandmarks && threshold > detectionThreshold;
-        gesture = haveHand ? HandGestures.Classify(lm) : "-";
+        // gesture = haveHand ? HandGestures.Classify(lm) : "-";
 
-        if(gesture != realGesture)
+        // if(gesture != realGesture)
+        // {
+        //     realGesture = gesture;
+        //     GestureChanged?.Invoke(realGesture);
+        // }
+
+        string raw;
+        if(haveHand)
         {
-            realGesture = gesture;
+            lostFrames = 0;
+            raw = HandGestures.Classify(lm);
+        }
+        else
+        {
+            lostFrames++;
+           raw = lostFrames > lostFramesAllowed ? "-" : candidate;
+        }
+
+        if(raw == candidate) candidateFrames++;
+        else
+        {
+            candidateFrames = 1;
+            candidate = raw;
+        }
+
+        if(candidateFrames >= framesNeeded && candidate != realGesture)
+        {
+            realGesture = candidate;
+            gesture = candidate;
             GestureChanged?.Invoke(realGesture);
         }
+
     }
 
     void OnGUI()
@@ -133,6 +170,7 @@ public class HandLiveTest : MonoBehaviour
 
     void OnDestroy()
     {
+        input?.Dispose();
         worker?.Dispose();
         crop?.Release();
         if (cam != null) cam.Stop();
