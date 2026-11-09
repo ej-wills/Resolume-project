@@ -511,6 +511,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandLiveTest
   landmarkModel: {fileID: 5022602860645237092, guid: f1e6538b6303e714db78b0592dfa8483, type: 3}
   detectionThreshold: 0.5
+  framesNeeded: 5
+  lostFramesAllowed: 10
+  smoothing: 0.5
+  haveHand: 0
   indexThreshold: 1.1
   middleThreshold: 1.1
   ringThreshold: 1.1
@@ -637,7 +641,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526920426}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b6df384e0e045b44b266687564c4077, type: 3}
   m_Name: 
@@ -785,6 +789,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameController
   hand: {fileID: 1518436974}
   resolume: {fileID: 2119657405}
+  code:
+  - Fist
+  - Open
+  - Peace
+  roundTime: 60
+  startHoldTime: 1
+  resultTime: 6
+  idleClip: 1
+  stepClips: 020000000300000004000000
+  solvedClip: 5
+  failedClip: 6
 --- !u!114 &2119657405
 MonoBehaviour:
   m_ObjectHideFlags: 0

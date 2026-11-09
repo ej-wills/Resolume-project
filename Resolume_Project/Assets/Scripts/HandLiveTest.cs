@@ -23,7 +23,7 @@ public class HandLiveTest : MonoBehaviour
     Vector3[] lm = new Vector3[21];
     float threshold;
     string gesture = "-";
-    bool haveHand;
+    public bool  haveHand;
     bool loggedShapes;
 
     public float indexThreshold = 1.1f;
@@ -36,6 +36,8 @@ public class HandLiveTest : MonoBehaviour
 
     public string realGesture { get; private set; } = "-";
     public event Action<string> GestureChanged;
+
+    public bool hasHand => haveHand;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
