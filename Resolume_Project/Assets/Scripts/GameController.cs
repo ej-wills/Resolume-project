@@ -132,29 +132,5 @@ void Update()
         GUI.Label(new Rect(540, 10, 500, 25), $"State: {state} step {step}/{code.Length} {Timer}"); 
     }
 
-    // void OnEnable()
-    // {
-    //     hand.GestureChanged += OnGestureChanged;
-    // }
-
-    // void OnDisable()
-    // {
-    //     hand.GestureChanged -= OnGestureChanged;
-    // }
-
-    // void OnGestureChanged(string gesture)
-    // {
-    //     switch (gesture)
-    //     {
-    //         case "Fist":
-    //             resolume.TriggerClip(1, 1);
-    //             break;
-    //         case "Open":
-    //             resolume.TriggerClip(1, 2);
-    //             break;
-    //         case "Pinch":
-    //             resolume.TriggerClip(1, 3);
-    //             break;
-    //     }
-    // }
+ 
 }

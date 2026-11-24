@@ -39,6 +39,9 @@ public class HandLiveTest : MonoBehaviour
 
     public bool hasHand => haveHand;
 
+    public HandSwipe swipe = new HandSwipe();
+    public event Action<SwipeDir> Swiped;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,6 +54,8 @@ public class HandLiveTest : MonoBehaviour
         worker = new Worker(model, BackendType.GPUCompute);
 
         input = new Tensor<float>(new TensorShape(1, 3, 256, 256));
+
+        swipe.Swiped += d => Swiped.Invoke(d);
     }
 
     // Update is called once per frame
@@ -115,6 +120,8 @@ public class HandLiveTest : MonoBehaviour
         //     realGesture = gesture;
         //     GestureChanged?.Invoke(realGesture);
         // }
+
+        swipe.Update(lm, haveHand);
 
         string raw;
         if(haveHand)

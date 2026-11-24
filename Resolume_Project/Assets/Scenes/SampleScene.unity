@@ -460,7 +460,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1518436973}
-  - component: {fileID: 1518436972}
   - component: {fileID: 1518436974}
   m_Layer: 0
   m_Name: HandTest
@@ -469,19 +468,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1518436972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518436971}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2af0d6ac8f5da6545be22bf5f936d827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandModelTest
-  detectorModel: {fileID: 5022602860645237092, guid: b3703525e9a3a4c4a8775c47206c81cf, type: 3}
 --- !u!4 &1518436973
 Transform:
   m_ObjectHideFlags: 0
@@ -532,7 +518,6 @@ GameObject:
   - component: {fileID: 1526920429}
   - component: {fileID: 1526920428}
   - component: {fileID: 1526920427}
-  - component: {fileID: 1526920431}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -634,19 +619,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 2070}
---- !u!114 &1526920431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526920426}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b6df384e0e045b44b266687564c4077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Test
-  resolume: {fileID: 2119657405}
 --- !u!1 &2119657398
 GameObject:
   m_ObjectHideFlags: 0
